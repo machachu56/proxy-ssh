@@ -24,7 +24,7 @@ if __name__ == '__main__':
     # Check the proxies
     for proxy in proxyList:
         protocol, ip, port = utils.separateIPPortProtocol(proxy)
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=threadsChecking) as executor:
             results = executor.map(utils.check_proxy, [ip], [port], [protocol], [timeoutProxy])
             for result in results:
                 if result != (None, None):

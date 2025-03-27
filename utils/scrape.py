@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import undetected_chromedriver as uc
 import utils.utilities as utilities
+import subprocess
 
 
 def extract_proxies(driver):
@@ -51,7 +52,7 @@ def click_next_page(driver):
         
         if next_button.is_enabled():
             next_button.click()
-            time.sleep(0.1)  # Adjust this if necessary
+            time.sleep(0.4)  # Adjust this if necessary
             return True
     except Exception as e:
         print("Next page button not found or error, DONE.")
@@ -61,7 +62,8 @@ def click_next_page(driver):
 
 def runScrape(protocollist, country):
     # Setup Selenium with headless Chrome
-    driver = uc.Chrome(headless=True,use_subprocess=False)
+    subprocess.Popen("playwright install chromium")
+    driver = uc.Chrome(headless=True,use_subprocess=False, browser_executable_path=utilities.get_chromium_path())
     url = f'https://www.proxydb.net/{protocollist}&country={country}'
     print(url)
     # Open ProxyDB.net
